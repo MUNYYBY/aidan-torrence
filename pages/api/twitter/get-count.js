@@ -15,7 +15,7 @@ export default function handler(req, res) {
   const getFollowers = async () => {
     let users = [];
     let params = {
-      max_results: 5,
+      max_results: 1,
       "user.fields": "created_at",
     };
 
