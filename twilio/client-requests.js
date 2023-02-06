@@ -6,7 +6,7 @@ export async function sendMessage(phone, message) {
   client.messages
     .create({
       body: message,
-      from: "+18334810102 ",
+      from: "+19295566047",
       to: phone,
     })
     .then((message) => {

@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import axios from "axios";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function Home() {
-  useEffect(() => {
-    axios.post("/api/twilio/send-message", {
-      phone: "+17047713395",
-      message: "Hello aidan, This is muneeb!",
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.post("/api/twilio/send-message", {
+  //     phone: "+923401839004",
+  //     message: "Hello aidan, This is muneeb!",
+  //   });
+  // }, []);
   return (
     <>
       <Head>
@@ -17,7 +19,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>Hello world</main>
+      <Header />
+      <Footer />
     </>
   );
 }
