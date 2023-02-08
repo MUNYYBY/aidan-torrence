@@ -1,12 +1,13 @@
-import { auth } from "../Firebase/Config";
+import { auth, db } from "./Config";
 import {
   createUserWithEmailAndPassword,
-  signInUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
+import axios from "axios";
 
-export async function signIn(email, password) {
-  signInUserWithEmailAndPassword(auth, email, password)
+export async function SignIn(email, password) {
+  signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
@@ -26,12 +27,21 @@ export async function CreateAccount(email, password, name, phone) {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      setDoc(doc(db, "users", email), {
-        email,
-        name,
-        phone,
-      });
-      return user;
+      try {
+        setDoc(doc(db, "users", email), {
+          email,
+          name,
+          phone,
+        });
+        axios.post("/api/twilio/send-message", {
+          phone: phone,
+          message: `Hello ${name}, Welcome to Our Company!`,
+        });
+        console.log("User Logged registered: ", user);
+        return user;
+      } catch (error) {
+        console.log("Error while adding to db: ", error);
+      }
       // ...
     })
     .catch((error) => {
