@@ -14,11 +14,10 @@ export default function Auth() {
     name: "",
     phone: "",
   });
-  const [error, setError] = useState(null);
+  const [error, setError] = useState({ status: null, message: null });
   const handleLogin = async (e) => {
     if (loginPayload.email != "" || loginPayload.password != "") {
       const result = await SignIn(loginPayload.email, loginPayload.password);
-      console.log(result);
     } else {
       setError({
         status: "email/password",
@@ -43,14 +42,16 @@ export default function Auth() {
     }
   };
   useEffect(() => {
-    toast.error("Email and password can not be empty", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      theme: "dark",
-    });
+    if (error.email || error.message) {
+      toast.error("Email and password can not be empty", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        theme: "dark",
+      });
+    }
   }, [error]);
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -124,7 +125,7 @@ export default function Auth() {
                     <span className="label-text">name</span>
                   </label>
                   <input
-                    type="text"
+                    type="name"
                     placeholder="name"
                     className="input input-bordered"
                     onChange={(e) => {
@@ -140,7 +141,7 @@ export default function Auth() {
                     <span className="label-text">Phone</span>
                   </label>
                   <input
-                    type="text"
+                    type="phone"
                     placeholder="phone"
                     className="input input-bordered"
                     onChange={(e) => {
@@ -156,7 +157,7 @@ export default function Auth() {
                     <span className="label-text">Email</span>
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     placeholder="email"
                     className="input input-bordered"
                     onChange={(e) => {
@@ -172,7 +173,7 @@ export default function Auth() {
                     <span className="label-text">Password</span>
                   </label>
                   <input
-                    type="text"
+                    type="password"
                     placeholder="password"
                     className="input input-bordered"
                     onChange={(e) => {
