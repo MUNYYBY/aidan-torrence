@@ -3,14 +3,21 @@ import Head from "next/head";
 import axios from "axios";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data: session, status } = useSession();
   // useEffect(() => {
   //   axios.post("/api/twilio/send-message", {
   //     phone: "+923401839004",
   //     message: "Hello aidan, This is muneeb!",
   //   });
   // }, []);
+  useEffect(() => {
+    console.log(
+      axios.get("https://api.twitter.com/2/users/729270187879505920/tweets")
+    );
+  }, []);
   return (
     <>
       <Head>
